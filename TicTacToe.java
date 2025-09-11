@@ -3,7 +3,5 @@ public class TicTacToe {
     char[][]board;
     boolean firstPlayer;
     boolean gameOver;
-
-
-
 }
+
