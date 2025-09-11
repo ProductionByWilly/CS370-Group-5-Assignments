@@ -3,5 +3,51 @@ public class TicTacToe {
     char[][]board;
     boolean firstPlayer;
     boolean gameOver;
+    // Will
+
+
+
+
+
+
+
+
+
+
+
+    // Ethan
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Jonathan
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    // Carmelo
+
 }
+
 
