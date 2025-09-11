@@ -41,15 +41,15 @@ public class TicTacToe {
         //insert code
     }
     private void printSymbol(int row, int column, char value) {
-        //insert code
+        board[row][column] = value; //place the value on the board
     }
 
     private boolean validMove(int row, int column) {
-        if (row < 0 || row >= BOARDSIZE || column < 0 || column >= BOARDSIZE){
+        if (row < 0 || row >= BOARDSIZE || column < 0 || column >= BOARDSIZE){ // Check if in bounds
             System.out.println("Not a valid move, try again.");
             return false;
         }
-        if (board[row][column] != ' '){
+        if (board[row][column] != ' '){ // Check if cell is occupied already
             System.out.println("Cell is occupied, try again.");
             return false;
         }
@@ -57,6 +57,7 @@ public class TicTacToe {
     }
 
 }
+
 
 
 
