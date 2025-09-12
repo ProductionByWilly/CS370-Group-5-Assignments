@@ -44,11 +44,14 @@ public class TicTacToe {
     }
     
     private void printStatus(int player) {
-        //insert code
-        
+        if (player == 1) {
+            System.out.println("Player X's turn.")
+        } else {
+            System.out.println("Player O's turn.");
+        }
     }
     
-    private Status gamestatus() {
+    private Status gameStatus() {
         //insert code
     }
 
@@ -92,6 +95,7 @@ public class TicTacToe {
     }
 
 }
+
 
 
 
