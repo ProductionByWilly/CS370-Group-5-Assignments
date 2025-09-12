@@ -25,21 +25,49 @@ public class TicTacToe {
 
     // Methods
     public void play() {
-        Scanner input = new Scanner(System.in);
+        Scanner input = new Scanner(System.in); // Used in java.util pack to read user input
+        System.out.print("Enter row ( 0, 1 or 2): "); // Get the row input
+        int row = input.nextInt(); // Grab the row's int value from the user
+        System.out.print("Enter column ( 0, 1 or 2): "); // Get the column input
+        int column = input.nextInt(); // Grab the columns int value from the user
+
+        while(!validMove(row,column))
+        {
+            System.out.print("Enter a new value ( 0, 1 or 2):" );
+            row = input.nextInt(); // Grab the columns int value from the user
+            System.out.print("Enter column ( 0, 1 or 2): "); // Get the column input
+            column = input.nextInt(); // Grab the columns int value from the user
+        }
 
 
         
     }
+    
     private void printStatus(int player) {
         //insert code
+        
     }
+    
     private Status gamestatus() {
         //insert code
     }
 
     public void printBoard() {
         //insert code
+        String line = " ------------------"; // line used for to create the boxes
+        System.out.println(line); // print the top
+        for(int i = 0;i < BOARDSIZE; i ++) // go through the rows
+            {
+                System.out.print(" | "); 
+                for(int j = 0; j < BOARDSIZE;j++) // go through the columns
+                    {
+                    System.out.print(board[i][j] + "  |  "); // make each cell and separate by using |
+                    }
+                System.out.println();
+                System.out.println(line); // Print after each board cell is created
+            }
     }
+    
     private void printSymbol(int row, int column, char value) {
         board[row][column] = value; //place the value on the board
     }
@@ -56,7 +84,15 @@ public class TicTacToe {
         return true;
     }
 
+    //This is the Main function that we can use to test the Methods
+    public static void main(String[] args){
+        TicTacToe t = new TicTacToe();
+        System.out.println("This is the (Method class to test) class");
+        t.play(); // replace play with the function you are going to test
+    }
+
 }
+
 
 
 
