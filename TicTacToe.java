@@ -54,13 +54,49 @@ public class TicTacToe {
     }
 
 
-    // Check whetrher the game is won, drawn, or still going
+    // Check whether the game is won, drawn, or still going
     private Status gameStatus() {
-        //insert code
+        char symbol = firstPlayer ? 'X' : 'O';  // char options
+
+        // Check rows
+        for (int i = 0; i < BOARDSIZE; i++) {
+            if (board[i][0] == symbol && board[i][1] == symbol && board[i][2] == symbol) {
+                return Status.WIN;
+            }
+        }
+
+        // Check columns
+        for (int j = 0; j < BOARDSIZE; j++) {
+            if (board[0][j] == symbol && board[1][j] == symbol && board[2][j] == symbol) {
+                return Status.WIN;
+            }
+        }
+
+        // Check diagonals
+        if (board[0][0] == symbol && board[1][1] == symbol && board[2][2] == symbol) {
+            return Status.WIN;
+        }
+        if (board[0][2] == symbol && board[1][1] == symbol && board[2][0] == symbol) {
+            return Status.WIN;
+        }
+
+
+        // Check if board is full (draw)
+        boolean full = true;
+        for (int i = 0; i < BOARDSIZE; i++) {
+            for (int j = 0; j < BOARDSIZE; j++) {
+                if(board[i][j] == ' ') {
+                    full = false;
+                }
+            }
+        }
+        if (full) {
+            return Status.DRAW; // Board is full, game ends in a draw
+        }
+        return Status.CONTINUE; // Game keeps going
     }
 
     public void printBoard() {
-        //insert code
         String line = " ------------------"; // line used for to create the boxes
         System.out.println(line); // print the top
         for(int i = 0;i < BOARDSIZE; i ++) // go through the rows
@@ -101,6 +137,7 @@ public class TicTacToe {
     }
 
 }
+
 
 
 
