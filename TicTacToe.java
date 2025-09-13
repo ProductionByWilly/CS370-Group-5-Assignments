@@ -47,7 +47,7 @@ public class TicTacToe {
     // Print current status (whose turn it is)
     private void printStatus(int player) {
         if (player == 1) {
-            System.out.println("Player X's turn.")
+            System.out.println("Player X's turn.");
         } else {
             System.out.println("Player O's turn.");
         }
@@ -137,6 +137,7 @@ public class TicTacToe {
     }
 
 }
+
 
 
 
