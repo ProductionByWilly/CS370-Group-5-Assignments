@@ -3,11 +3,11 @@ import java.util.Scanner;
 public class TicTacToe {
 
     // Attributes
-    private final static int BOARDSIZE = 3;
-    private enum Status {WIN, DRAW, CONTINUE};
-    private char[][] board;
-    private boolean firstPlayer;
-    private boolean gameOver;
+    private final static int BOARDSIZE = 3;  // Size of the tictactoe board
+    private enum Status {WIN, DRAW, CONTINUE};  // Enum to represent game result
+    private char[][] board;  // 2D array for the board
+    private boolean firstPlayer;   // True if player X's turn
+    private boolean gameOver;   // To stop game when finished
     
     // Constructor
     public TicTacToe(){
@@ -17,8 +17,8 @@ public class TicTacToe {
                     board[i][j] = ' ';
                 }    
             }
-        firstPlayer = true;
-        gameOver = false;
+        firstPlayer = true;    // X goes first
+        gameOver = false;      // Game is not over at start
     }
 
 
@@ -42,7 +42,9 @@ public class TicTacToe {
 
         
     }
-    
+
+
+    // Print current status (whose turn it is)
     private void printStatus(int player) {
         if (player == 1) {
             System.out.println("Player X's turn.")
@@ -50,7 +52,9 @@ public class TicTacToe {
             System.out.println("Player O's turn.");
         }
     }
-    
+
+
+    // Check whetrher the game is won, drawn, or still going
     private Status gameStatus() {
         //insert code
     }
@@ -70,11 +74,13 @@ public class TicTacToe {
                 System.out.println(line); // Print after each board cell is created
             }
     }
-    
+
+    // Place a symbol (X or O) on the board
     private void printSymbol(int row, int column, char value) {
         board[row][column] = value; //place the value on the board
     }
 
+    // Check if a move is valid
     private boolean validMove(int row, int column) {
         if (row < 0 || row >= BOARDSIZE || column < 0 || column >= BOARDSIZE){ // Check if in bounds
             System.out.println("Not a valid move, try again.");
@@ -95,6 +101,7 @@ public class TicTacToe {
     }
 
 }
+
 
 
 
