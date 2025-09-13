@@ -25,24 +25,88 @@ public class TicTacToe {
 
     // Methods
     public void play() {
-        Scanner input = new Scanner(System.in); // Used in java.util pack to read user input
-        System.out.print("Enter row ( 0, 1 or 2): "); // Get the row input
-        int row = input.nextInt(); // Grab the row's int value from the user
-        System.out.print("Enter column ( 0, 1 or 2): "); // Get the column input
-        int column = input.nextInt(); // Grab the columns int value from the user
+        int row, column; 
+        char val;
+        int player = 1; // Start with player X
 
-        while(!validMove(row,column))
-        {
-            System.out.print("Enter a new value ( 0, 1 or 2):" );
-            row = input.nextInt(); // Grab the columns int value from the user
-            System.out.print("Enter column ( 0, 1 or 2): "); // Get the column input
-            column = input.nextInt(); // Grab the columns int value from the user
+        Scanner input = new Scanner(System.in);
+
+    while (!gameOver) {
+
+        // Before each turn, check if game already ended in a draw
+        if (gameStatus() == Status.DRAW) {
+            System.out.println("Game is a draw!");
+            gameOver = true;
+            break;
         }
 
+        // Player X's Turn
+        if (player == 1) {
+            printStatus(player); // "Player X's turn"
+            val = 'X';
 
-        
+            // Get row & column input
+            System.out.print("Player X: Enter row (0, 1, or 2): ");
+            row = input.nextInt();
+            System.out.print("Player X: Enter column (0, 1, or 2): ");
+            column = input.nextInt();
+
+            // Validate input until it's correct
+            while (!validMove(row, column)) {
+                System.out.print("Enter row (0, 1, or 2): ");
+                row = input.nextInt();
+                System.out.print("Enter column (0, 1, or 2): ");
+                column = input.nextInt();
+            }
+
+            // Place symbol & print board
+            printSymbol(row, column, val);
+            printBoard();
+
+            // Check if X just won
+            if (gameStatus() == Status.WIN) {
+                System.out.println("Player X WINS!");
+                gameOver = true;
+                break;
+            }
+
+            player = 2; // switch turn
+        }
+
+        // Player O's Turn
+        else if (player == 2) {
+            printStatus(player); // "Player O's turn"
+            val = 'O';
+
+            // Get row & column input
+            System.out.print("Player O: Enter row (0, 1, or 2): ");
+            row = input.nextInt();
+            System.out.print("Player O: Enter column (0, 1, or 2): ");
+            column = input.nextInt();
+
+            // Validate input until it's correct
+            while (!validMove(row, column)) {
+                System.out.print("Enter row (0, 1, or 2): ");
+                row = input.nextInt();
+                System.out.print("Enter column (0, 1, or 2): ");
+                column = input.nextInt();
+            }
+
+            // Place symbol & print board
+            printSymbol(row, column, val);
+            printBoard();
+
+            // Check if O just won
+            if (gameStatus() == Status.WIN) {
+                System.out.println("Player O WINS!");
+                gameOver = true;
+                break;
+            }
+
+            player = 1; // switch turn
+        }
     }
-
+}
 
     // Print current status (whose turn it is)
     private void printStatus(int player) {
@@ -137,8 +201,6 @@ public class TicTacToe {
     }
 
 }
-
-
 
 
 
