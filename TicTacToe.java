@@ -23,44 +23,94 @@ public class TicTacToe {
 
 
 
-    // Methods
+            // Methods
     public void play() {
-        Scanner input = new Scanner(System.in); // Used in java.util pack to read user input
-        System.out.print("Enter row ( 0, 1 or 2): "); // Get the row input
-        int row = input.nextInt(); // Grab the row's int value from the user
-        System.out.print("Enter column ( 0, 1 or 2): "); // Get the column input
-        int column = input.nextInt(); // Grab the columns int value from the user
+        Scanner input = new Scanner(System.in);
 
-        while(!validMove(row,column))
-        {
-            System.out.print("Enter a new value ( 0, 1 or 2):" );
-            row = input.nextInt(); // Grab the columns int value from the user
-            System.out.print("Enter column ( 0, 1 or 2): "); // Get the column input
-            column = input.nextInt(); // Grab the columns int value from the user
+        while (!gameOver) {
+            printBoard(); 
+            char symbol = firstPlayer ? 'X' : 'O';
+            System.out.println("Player " + symbol + "'s turn.");
+
+            int row, col;
+            do {
+                System.out.print("Player " + symbol + ": Enter row (0, 1, or 2): ");
+                row = input.nextInt();
+                System.out.print("Player " + symbol + ": Enter column (0, 1, or 2): ");
+                col = input.nextInt();
+            } while (!validMove(row, col));
+
+            printSymbol(row, col, symbol);
+
+            Status status = gameStatus();
+            if (status == Status.WIN) {
+                printBoard();
+                System.out.println("Player " + symbol + " wins.");
+                gameOver = true;
+            } else if (status == Status.DRAW) {
+                printBoard();
+                System.out.println("It's a draw!");
+                gameOver = true;
+            } else {
+                firstPlayer = !firstPlayer;  // Switch turns
+            }
+            
         }
-
-
-        
     }
-
 
     // Print current status (whose turn it is)
     private void printStatus(int player) {
         if (player == 1) {
-            System.out.println("Player X's turn.")
+            System.out.println("Player X's turn.");
         } else {
             System.out.println("Player O's turn.");
         }
     }
 
 
-    // Check whetrher the game is won, drawn, or still going
+    // Check whether the game is won, drawn, or still going
     private Status gameStatus() {
-        //insert code
+        char symbol = firstPlayer ? 'X' : 'O';  // char options
+
+        // Check rows
+        for (int i = 0; i < BOARDSIZE; i++) {
+            if (board[i][0] == symbol && board[i][1] == symbol && board[i][2] == symbol) {
+                return Status.WIN;
+            }
+        }
+
+        // Check columns
+        for (int j = 0; j < BOARDSIZE; j++) {
+            if (board[0][j] == symbol && board[1][j] == symbol && board[2][j] == symbol) {
+                return Status.WIN;
+            }
+        }
+
+        // Check diagonals
+        if (board[0][0] == symbol && board[1][1] == symbol && board[2][2] == symbol) {
+            return Status.WIN;
+        }
+        if (board[0][2] == symbol && board[1][1] == symbol && board[2][0] == symbol) {
+            return Status.WIN;
+        }
+
+
+        // Check if board is full (draw)
+        boolean full = true;
+        for (int i = 0; i < BOARDSIZE; i++) {
+            for (int j = 0; j < BOARDSIZE; j++) {
+                if(board[i][j] == ' ') {
+                    full = false;
+                }
+            }
+        }
+        if (full) {
+            return Status.DRAW; // Board is full, game ends in a draw
+        }
+        return Status.CONTINUE; // Game keeps going
     }
 
     public void printBoard() {
-        //insert code
         String line = " ------------------"; // line used for to create the boxes
         System.out.println(line); // print the top
         for(int i = 0;i < BOARDSIZE; i ++) // go through the rows
