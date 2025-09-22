@@ -9,21 +9,19 @@ import java.awt.event.*;                  // ActionListener (button clicks)
 import java.io.File;                      // File handling
 import java.io.IOException;               // IO exception for image reading
 import java.util.*;                       // ArrayList, HashMap, Collections
-import javax.imageio.ImageIO;             // Read images from files
-import java.awt.image.BufferedImage;      // BufferedImage for image manipulation
 
 public class CardShuffler {
     // Attributes
-    private static final String CARDS_FOLDER = "cards"; // folder where your card image files live (relative to working dir)
+    private static final String CARDS_FOLDER = "cards"; // folder where card image files are stored
 
     // desired width and height to scale images to (px)
     private static final int CARD_WIDTH = 90;
-    private static final int CARD_HEIGHT = 130;
-    private static final int COLUMNS = 13; 
+    private static final int CARD_HEIGHT = 125;
+    
+    private static final int COLUMNS = 13; // display grid columns: 13 columns produces 4 rows
 
     //  Runtime fields 
-    private final ArrayList<String> deck = new ArrayList<>();  // list of filenames for the deck, e.g. "SA.jpg", "H10.jpg"
-    private final Map<String, ImageIcon> iconCache = new HashMap<>();  // simple cache mapping filename
+    private final ArrayList<String> deck = new ArrayList<>();  // list of filenames for the deck, "SA.jpg", "H10.jpg"
     private final ArrayList<JLabel> cardLabels = new ArrayList<>(); // list of JLabels that show icons in the grid 
     private JPanel cardPanel; // panel that holds the grid of card labels
 
@@ -44,24 +42,18 @@ public class CardShuffler {
     }
 
     // Methods
-    // This method creates the GUI, the grid of labels, and the shuffle button
+    // Build and show the GUI
     public void createAndShowGUI() {
-        // Create main window
-        JFrame frame = new JFrame("Simple Card Shuffler");
+        JFrame frame = new JFrame("Card Shuffler — Simple (no preload)");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new BorderLayout(8, 8));
+        frame.setLayout(new BorderLayout(8, 8)); // small gaps around components
 
-        // Calculate rows needed (52 cards / 13 columns = 4 rows)
+        // Compute rows (52 cards / 13 columns -> 4 rows)
         int rows = Math.max(1, (deck.size() + COLUMNS - 1) / COLUMNS);
-
-        // Create a panel with GridLayout to place card images
         cardPanel = new JPanel(new GridLayout(rows, COLUMNS, 6, 6));
-        cardPanel.setBackground(Color.GREEN); 
+        cardPanel.setBackground(Color.GREEN); // makes gaps visible
 
-        // Preload icons into cache so we only do it once
-        preloadIcons();
-
-        // Create JLabels and add them to panel and list
+        // Create a JLabel for each card spot (icons will be loaded and set in updateDisplay())
         for (int i = 0; i < deck.size(); i++) {
             JLabel lbl = new JLabel();
             lbl.setHorizontalAlignment(SwingConstants.CENTER);
@@ -73,10 +65,10 @@ public class CardShuffler {
             cardPanel.add(lbl);
         }
 
-        // Show the initial order
+        // Display images in initial (unshuffled) order
         updateDisplay();
 
-        // Put card panel in a scroll pane in case the window is small
+        // Put cardPanel inside a JScrollPane in case window is small
         JScrollPane scroll = new JScrollPane(cardPanel,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -85,17 +77,17 @@ public class CardShuffler {
         // Bottom panel with Shuffle button
         JPanel bottom = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JButton shuffleBtn = new JButton("Shuffle");
-        // When clicked, shuffle the deck and refresh the icons
         shuffleBtn.addActionListener(e -> {
-            shuffleDeck();
+            // Shuffle the filenames and reload the icons into labels
+            Collections.shuffle(deck);
             updateDisplay();
         });
         bottom.add(shuffleBtn);
         frame.add(bottom, BorderLayout.SOUTH);
 
-        // Sets reasonable window size
-        frame.setPreferredSize(new Dimension(Math.min(1400, COLUMNS * (CARD_WIDTH + 12)),
-                                             Math.min(800, rows * (CARD_HEIGHT + 30))));
+        // Set a reasonable window size and show
+        frame.setPreferredSize(new Dimension(Math.min(1400, COLUMNS * (CARD_WIDTH + 14)),
+                                             Math.min(800, rows * (CARD_HEIGHT + 32))));
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -107,7 +99,7 @@ public class CardShuffler {
         Collections.shuffle(deck);
     }
 
-    public void displayCards() {
+    public void updateDisplay() {
 
     }
     // Main Function
