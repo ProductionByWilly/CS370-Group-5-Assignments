@@ -44,60 +44,53 @@ public class CardShuffler {
     // Methods
     // Build and show the GUI
     public void createAndShowGUI() {
-        JFrame frame = new JFrame("Card Shuffler — Simple (no preload)");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JFrame frame = new JFrame("Card Shuffler"); // creates the main window frame
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // sets what happens when the user clicks exit
         frame.setLayout(new BorderLayout(8, 8)); // small gaps around components
 
-        // Compute rows (52 cards / 13 columns -> 4 rows)
-        int rows = Math.max(1, (deck.size() + COLUMNS - 1) / COLUMNS);
-        cardPanel = new JPanel(new GridLayout(rows, COLUMNS, 6, 6));
-        cardPanel.setBackground(Color.GREEN); // makes gaps visible
+        // Compute rows 
+        int rows = Math.max(1, (deck.size() + COLUMNS - 1) / COLUMNS); // calculates how many rows are needed for the grid
+        cardPanel = new JPanel(new GridLayout(rows, COLUMNS, 6, 6)); // creates panel with grid layout, 4 rows, 13 columns, 6 pixel gap 
+        cardPanel.setBackground(Color.GREEN); // makes background green
 
-        // Create a JLabel for each card spot (icons will be loaded and set in updateDisplay())
-        for (int i = 0; i < deck.size(); i++) {
-            JLabel lbl = new JLabel();
-            lbl.setHorizontalAlignment(SwingConstants.CENTER);
-            lbl.setVerticalAlignment(SwingConstants.CENTER);
-            lbl.setOpaque(true);
-            lbl.setBackground(Color.WHITE);
-            lbl.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-            cardLabels.add(lbl);
-            cardPanel.add(lbl);
+
+        for (int i = 0; i < deck.size(); i++) {   // loops through all 52 cards to create a JLabel
+            JLabel lbl = new JLabel();  //  creates an empty label 
+            lbl.setHorizontalAlignment(SwingConstants.CENTER); // centers the image horizontally
+            lbl.setVerticalAlignment(SwingConstants.CENTER);   // centers the image vertically
+            lbl.setOpaque(true);  // makes the label see through so background color is shown
+            lbl.setBackground(Color.WHITE);  // sets background color of each card to white
+            lbl.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));  // adds a thin light gray boarder for each card
+            cardLabels.add(lbl);  // adds label to our arrayList so we can reference it later
+            cardPanel.add(lbl);  // adds the label to the visual grid panel
         }
 
-        // Display images in initial (unshuffled) order
-        updateDisplay();
+        updateDisplay();  // loads the card images into each label
 
         // Put cardPanel inside a JScrollPane in case window is small
         JScrollPane scroll = new JScrollPane(cardPanel,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        frame.add(scroll, BorderLayout.CENTER);
+                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED); // wraps the panel in a scroll plane (needed if content is larger than the window)
+        frame.add(scroll, BorderLayout.CENTER);  // adds the scroll pane to the center region of the frame's BorderLayout
 
         // Bottom panel with Shuffle button
-        JPanel bottom = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JButton shuffleBtn = new JButton("Shuffle");
+        JPanel bottom = new JPanel(new FlowLayout(FlowLayout.CENTER)); // creates a panel for the bottom area using FlowLayout
+        JButton shuffleBtn = new JButton("Shuffle"); // creates a button with the text "shuffle"
         shuffleBtn.addActionListener(e -> {
-            // Shuffle the filenames and reload the icons into labels
-            Collections.shuffle(deck);
-            updateDisplay();
+            Collections.shuffle(deck); // when clicked it shuffles the deck ArrayList randomly, then updates the display to show new order
+            updateDisplay();  // shows the updated display
         });
-        bottom.add(shuffleBtn);
-        frame.add(bottom, BorderLayout.SOUTH);
+        bottom.add(shuffleBtn); // adds the button to the bottom panel
+        frame.add(bottom, BorderLayout.SOUTH); // adds the bottom panel to the south region of the frame
 
         // Set a reasonable window size and show
         frame.setPreferredSize(new Dimension(Math.min(1400, COLUMNS * (CARD_WIDTH + 14)),
-                                             Math.min(800, rows * (CARD_HEIGHT + 32))));
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+                                             Math.min(800, rows * (CARD_HEIGHT + 32))));  // calculates preferred window size based on card dimensions plus padding
+        frame.pack();  // sizes the window to fit its preferred size (calculated above)
+        frame.setLocationRelativeTo(null);  // centers the window on the screen
+        frame.setVisible(true); // makes the window visible to the user
     }
 
-    
-    public void shuffle() {
-        // use collections built in shuffle to shuffle deck
-        Collections.shuffle(deck);
-    }
 
     public void updateDisplay() {
 
