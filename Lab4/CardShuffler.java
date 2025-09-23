@@ -93,6 +93,21 @@ public class CardShuffler {
 
     public void updateDisplay() {
 
+        for (int i = 0; i < deck.size(); i++) { // loop through the deck
+            String fileName = deck.get(i); // create filename with contents from deck
+            File imgFile = new File(CARDS_FOLDER, fileName); // create imgFile with fileName from deck
+            if (imgFile.exists()) {
+                ImageIcon icon = new ImageIcon(imgFile.getAbsolutePath());
+
+                Image scaled = icon.getImage().getScaledInstance(CARD_WIDTH, CARD_HEIGHT, Image.SCALE_SMOOTH);
+                cardLabels.get(i).setIcon(new ImageIcon(scaled));
+            }
+            else {
+                cardLabels.get(i).setText("X");
+            }
+            cardPanel.revalidate();
+            cardPanel.repaint();
+        }
     }
     // Main Function
     public static void main(String[] args){
