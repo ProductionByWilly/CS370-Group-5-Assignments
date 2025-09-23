@@ -2,7 +2,7 @@
 // Simple Swing program to display 52 card images from a "cards" folder
 // Shuffle them when a button is clicked
 
-
+import javax.smartcardio.Card;
 import javax.swing.*;                     // Swing GUI components
 import java.awt.*;                        // Layouts, Dimensions, Colors
 import java.awt.event.*;                  // ActionListener (button clicks)
@@ -27,7 +27,6 @@ public class CardShuffler {
 
     // Constructor
     public CardShuffler() {
-        deck = new ArrayList<>();
         // create suits array
         String[] suits = {"S", "H", "C", "D"};
         // create value array
@@ -97,6 +96,8 @@ public class CardShuffler {
     }
     // Main Function
     public static void main(String[] args){
+        CardShuffler d = new CardShuffler();
+        d.createAndShowGUI();
     }
 
 }
